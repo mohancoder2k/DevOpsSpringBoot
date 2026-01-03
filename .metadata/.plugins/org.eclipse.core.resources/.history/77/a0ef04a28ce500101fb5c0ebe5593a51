@@ -1,0 +1,36 @@
+package com.mohan.Inventory.Controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mohan.Inventory.Entity.Inventory;
+import com.mohan.Inventory.Service.InventoryService;
+
+@RestController
+@RequestMapping("/inventory")
+public class InventoryController {
+
+    @Autowired
+    private InventoryService inventoryService;
+
+    @GetMapping("/check/{productCode}")
+    public boolean checkStock(@PathVariable("productCode") String productCode) {
+        return inventoryService.isInStock(productCode);
+    }
+
+    @GetMapping("/product/{productCode}")
+    public Inventory getProduct(@PathVariable("productCode") String productCode) {
+        return inventoryService.getProductDetails(productCode);
+    }
+    @PostMapping("/reduce")
+    public void reduceStock(@RequestBody ReduceStockRequest request) {
+        inventoryService.reduceStock(
+                request.getProductCode(),
+                request.getQuantity()
+        );
+    }
+}
+

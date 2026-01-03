@@ -1,0 +1,25 @@
+spring.application.name=API-Gateway
+# General Application Settings
+# spring.application.name=api-gateway
+server.port=8080
+
+# Eureka Client Configuration
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+
+# Gateway Discovery Locator
+spring.cloud.gateway.discovery.locator.enabled=true
+spring.cloud.gateway.discovery.locator.lower-case-service-id=true
+
+# --- Gateway Routes ---
+
+# Route: Order Service
+spring.cloud.gateway.routes[0].id=order-service
+spring.cloud.gateway.routes[0].uri=lb://order-service
+spring.cloud.gateway.routes[0].predicates[0]=Path=/orders/**
+
+# Route: Inventory Service
+spring.cloud.gateway.routes[1].id=inventory-service
+spring.cloud.gateway.routes[1].uri=lb://inventory-service
+spring.cloud.gateway.routes[1].predicates[0]=Path=/inventory/**

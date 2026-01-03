@@ -1,0 +1,5 @@
+package com.mohan.Order.dto;
+
+public class ReduceStockRequest {
+
+}

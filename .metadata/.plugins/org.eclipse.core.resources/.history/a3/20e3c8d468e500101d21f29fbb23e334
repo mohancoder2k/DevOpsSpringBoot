@@ -1,0 +1,40 @@
+package com.mohan.Inventory.Entity;
+
+import jakarta.persistence.Entity;
+
+import java.math.BigDecimal;
+
+import jakarta.persistence.*;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+
+@Entity
+@Data
+@Table(name = "inventory")
+
+public class Inventory {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "product_code", nullable = false, unique = true)
+    private String productCode;
+
+    private String productName;
+
+    private String category;
+
+    private int quantity;
+
+    private int reservedQuantity;
+
+    private BigDecimal price;
+
+    private String status;
+
+    private String warehouseLocation;
+
+    private LocalDateTime lastUpdated;
+}

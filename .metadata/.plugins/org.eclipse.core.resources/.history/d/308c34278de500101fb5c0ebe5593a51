@@ -1,0 +1,31 @@
+package com.mohan.Order.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mohan.Order.Client.InventoryClient;
+import com.mohan.Order.dto.OrderRequest;
+
+@Service
+public class OrderService {
+
+    @Autowired
+    private InventoryClient inventoryClient;
+
+    public String placeOrder(OrderRequest request) {
+
+        boolean available =
+                inventoryClient.isInStock(request.getProductCode());
+
+        if (!available) {
+            return "Order failed: Product out of stock";
+        }
+
+        inventoryClient.reduceStock(
+                request.getProductCode(),
+                request.getQuantity()
+        );
+
+        return "Order placed successfully";
+    }
+}
